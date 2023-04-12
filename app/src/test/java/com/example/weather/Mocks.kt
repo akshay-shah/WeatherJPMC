@@ -26,6 +26,10 @@ val mockSearchCityByNameResponse = SearchCityByNameUseCase.SearchCityByNameRespo
     mockCityNameListModel, false
 )
 
+val mockErrorSearchCityByNameResponse = SearchCityByNameUseCase.SearchCityByNameResponse(
+    listOf(), true
+)
+
 val mockWeatherEntity = WeatherEntity(
     coord = CoordEntity(lat = 18.09, lon = 19.01),
     name = "Pune",
@@ -88,6 +92,11 @@ val mockWeatherDetailModel = WeatherDetailModel(
 val mockGetWeatherByLatLongResponse = GetWeatherByLatLongUseCase.GetWeatherByLatLongResponse(
     weatherDetail = mockWeatherDetailModel, error = false
 )
+
+val mockErrorGetWeatherByLatLongResponse = GetWeatherByLatLongUseCase.GetWeatherByLatLongResponse(
+    weatherDetail = null, error = true
+)
+
 
 val mockGetWeatherByLatLongRequest =
     GetWeatherByLatLongUseCase.GetWeatherByLatLongRequest(lat = 19.0, long = 20.0)

@@ -7,6 +7,9 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +53,18 @@ class HomeFragment : Fragment() {
         )
         binding.lifecycleOwner = this@HomeFragment
         binding.viewModel = this@HomeFragment.viewModel
-        binding.searchViewCitySearch.addTextChangedListener(viewModel.queryTextListener)
+        binding.searchViewCitySearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //TODO("Not yet implemented")
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //TODO("Not yet implemented")
+            }
+
+            override fun afterTextChanged(string: Editable?) {
+                viewModel.searchCity(SpannableStringBuilder(string).toString())
+            }
+        })
         binding.searchViewCitySearch.setOnItemClickListener { _, _, position, _ ->
             viewModel.onListItemClickListener(position)
         }

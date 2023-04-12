@@ -1,7 +1,5 @@
 package com.example.weather.presentation.ui.home
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.lifecycle.MutableLiveData
 import com.example.weather.domain.usecase.GetWeatherByLatLongUseCase
 import com.example.weather.domain.usecase.SearchCityByNameUseCase
@@ -35,23 +33,10 @@ class HomeViewModel @Inject constructor(
         getWeather(cityCountryName.lat, cityCountryName.lon)
     }
 
-    val queryTextListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            //
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            //
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            searchCharacter(s.toString())
-        }
-
-    }
-
     fun getWeather(lat: Double, lon: Double) {
         coroutineScope.launch {
+            showLoading.postValue(true)
+            showError.postValue(false)
             val response = getWeatherByLatLongUseCase.executeUseCase(
                 GetWeatherByLatLongUseCase.GetWeatherByLatLongRequest(
                     lat,
@@ -60,8 +45,10 @@ class HomeViewModel @Inject constructor(
             )
             when (response.error) {
                 true -> {
+                    showError.postValue(true)
                 }
                 false -> {
+                    showLoading.postValue(false)
                     showSuccess.postValue(true)
                     val mappedData = weatherInfoMapper.toModel(response.weatherDetail)
                     weatherInfoModel.postValue(mappedData)
@@ -70,8 +57,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun searchCharacter(query: String?) {
+    fun searchCity(query: String?) {
         coroutineScope.launch {
+            showError.postValue(false)
             val response = searchCityByNameUseCase.executeUseCase(
                 SearchCityByNameUseCase.SearchCityByNameRequest(
                     query ?: ""
@@ -79,13 +67,13 @@ class HomeViewModel @Inject constructor(
             )
             when (response.error) {
                 true -> {
+                    showError.postValue(true)
                 }
                 false -> {
                     when (response.cityNames?.size?.compareTo(0)) {
                         0 -> {
                         }
-                        else -> {
-                            showSuccess.postValue(true)
+                        1 -> {
                             val mappedData =
                                 cityCountryNameMapper.toModel(response.cityNames?.toList())
                             cityCountryNameModel.postValue(mappedData)
