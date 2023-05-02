@@ -1,6 +1,7 @@
 # Weather App
 
-Weather app is a small app to search weather of your city as well as it display your current location weather..
+Weather app is a small app to search weather of your city as well as it display your current
+location weather..
 
 ## API
 
@@ -17,7 +18,8 @@ Weather app is a small app to search weather of your city as well as it display 
 * Data Binding
 * Mockito
 * Clean Architecture
-.
+  .
+
 ## What can be improved?
 
 * Does not support local storage.

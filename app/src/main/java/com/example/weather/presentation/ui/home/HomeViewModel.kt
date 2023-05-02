@@ -45,6 +45,7 @@ class HomeViewModel @Inject constructor(
             )
             when (response.error) {
                 true -> {
+                    showLoading.postValue(false)
                     showError.postValue(true)
                 }
                 false -> {

@@ -18,7 +18,7 @@ class WeatherInfoMapper : ModelMapper<WeatherDetailModel, WeatherInfoModel> {
                 main = main,
                 description = description,
                 iconUrl = iconUrl.getIconUrl(),
-                pressure = "$pressure mBar",
+                pressure = "$pressure hPa",
                 humidity = "$humidity %",
                 temperature = temperature.kelvinToCelsius().toString(),
                 country = country,

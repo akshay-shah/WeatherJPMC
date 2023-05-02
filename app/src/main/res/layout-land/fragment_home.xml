@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ui.home.HomeFragment">
+
+    <data>
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.weather.presentation.ui.home.HomeViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/searchViewCitySearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_search_text"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/layout_weather_basic"
+                layout="@layout/layout_weather_basic_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="@{(safeUnbox(viewModel.showSuccess) ? view.VISIBLE : view.GONE)}"
+                app:layout_constraintTop_toBottomOf="@id/searchViewCitySearch"
+                app:viewModel="@{viewModel}" />
+
+            <include
+                android:id="@+id/layout_weather_additional"
+                layout="@layout/layout_weather_additional_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="@{(safeUnbox(viewModel.showSuccess) ? view.VISIBLE : view.GONE)}"
+                app:layout_constraintTop_toBottomOf="@id/layout_weather_basic"
+                app:viewModel="@{viewModel}" />
+
+            <include
+                android:id="@+id/layout_sunset_sunrise"
+                layout="@layout/layout_sunrise_sunset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="@{(safeUnbox(viewModel.showSuccess) ? view.VISIBLE : view.GONE)}"
+                app:layout_constraintTop_toBottomOf="@id/layout_weather_additional"
+                app:viewModel="@{viewModel}" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{(safeUnbox(viewModel.showLoading) ? view.VISIBLE : view.GONE)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchViewCitySearch"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_text"
+                android:visibility="@{(safeUnbox(viewModel.showError) ? view.VISIBLE : view.GONE)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchViewCitySearch"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

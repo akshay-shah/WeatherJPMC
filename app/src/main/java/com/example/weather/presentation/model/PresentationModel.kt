@@ -1,8 +1,5 @@
 package com.example.weather.presentation.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 data class WeatherInfoModel(
     val name: String,
     val lat: Double,
